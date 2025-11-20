@@ -13,7 +13,7 @@ INSTANCE = os.getenv("INSTANCE")
 REQUESTS_PER_SECOND = 2
 CONCURRENT_USERS = 5
 OUTPUT_CSV = f"data/watched_{INSTANCE}.csv"
-INPUT_CSV = f"data/members_{INSTANCE}.csv"
+INPUT_CSV = f"data/letterboxd_members.csv"
 SAVE_EVERY = 5  # save after every N users
 
 
