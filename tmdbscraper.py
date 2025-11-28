@@ -12,7 +12,7 @@ BASE_URL = "https://api.themoviedb.org/3"
 # CONFIG
 # ===========================================================
 INPUT_FILE = "data/Letterboxd_Movies.csv"          # Must contain: title, year
-OUTPUT_FILE = "movies_tmdb.csv"    # Final output
+OUTPUT_FILE = "data/movies_tmdb.csv"    # Final output
 CHECKPOINT_FILE = "checkpoint.json"
 SAVE_EVERY = 1000                  # Save every N movies
 MAX_REQUESTS_PER_SEC = 2           # Safe rate limit
@@ -114,6 +114,7 @@ def extract_fields(data):
 
 async def process_movie(idx, row, session, results, done_set):
     """Process a single movie: Search → Details → Extract."""
+    movie_id = row["m.movieid"]
     title = row["m.title"]
     year = row["m.releaseDate"]
 
@@ -121,6 +122,7 @@ async def process_movie(idx, row, session, results, done_set):
 
     if not tmdb_id:
         results.append({
+            "movie_id": movie_id,
             "title": title,
             "year": year,
             "tmdb_id": None,
@@ -139,6 +141,7 @@ async def process_movie(idx, row, session, results, done_set):
     fields = extract_fields(info)
 
     results.append({
+        "movie_id": movie_id,
         "title": title,
         "year": year,
         "tmdb_id": tmdb_id,
